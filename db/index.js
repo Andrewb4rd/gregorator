@@ -23,7 +23,7 @@ async function createLink({ comment, date, url, tags = [] }) {
       ON CONFLICT (url) DO NOTHING 
       RETURNING *;
       `,
-      [url, comment, date, "0"]
+      [url, comment, date, 0]
     );
 
     const tagList = await createTags(tags);
@@ -181,52 +181,16 @@ async function getLinksByTagName(tagName) {
   }
 }
 
-async function updateLink(linkId, fields = {}) {
-  // read off the tags & remove that field
-  const { tags } = fields; // might be undefined
-  delete fields.tags;
-
-  // build the set string
-  const setString = Object.keys(fields)
-    .map((key, index) => `"${key}"=$${index + 1}`)
-    .join(", ");
-
+async function updateLink(linkId) {
   try {
-    // update any fields that need to be updated
-    if (setString.length > 0) {
-      await client.query(
-        `
-        UPDATE links
-        SET ${setString}
-        WHERE id=${linkId}
-        RETURNING *;
-      `,
-        Object.values(fields)
-      );
-    }
-
-    // return early if there's no tags to update
-    if (tags === undefined) {
-      return await getLinkById(linkId);
-    }
-
-    // make any new tags that need to be made
-    const tagList = await createTags(tags);
-    const tagListIdString = tagList.map((tag) => `${tag.id}`).join(", ");
-
-    // delete any link_tags from the database which aren't in that tagList
     await client.query(
       `
-      DELETE FROM link_tags
-      WHERE "tagId"
-      NOT IN (${tagListIdString})
-      AND "linkId"=$1;
-    `,
-      [linkId]
+        UPDATE links
+        SET clickCount = (clickCount + 1)
+        WHERE id=${linkId}
+        RETURNING *;
+      `
     );
-
-    // and create link_tags as necessary
-    await addTagsToLink(linkId, tagList);
 
     return await getLinkById(linkId);
   } catch (error) {

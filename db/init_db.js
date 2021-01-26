@@ -29,7 +29,7 @@ async function buildTables() {
       url varchar(255) UNIQUE NOT NULL,
       comment varchar(255) NOT NULL,
       date varchar(255) NOT NULL,
-      clickCount varchar(255)
+      clickCount numeric(255)
     );
 
     CREATE TABLE tags (
@@ -91,13 +91,8 @@ async function testDb() {
     console.log("Result: ", linksByTag);
 
     console.log("Calling updateLink on links[0]");
-    const updateLinkResult = await updateLink(links[0].id, {
-      url: "https://www.youtube.com/watch?v=h4fRnJjhZ64&t=23s",
-      comment: "SLIIIINKYYYY",
-      tags: ["slinky", "funny", "toystory"],
-      date: "1/26/21",
-    });
-    console.log("Result:", updateLinkResult);
+    const updateLinkResult = await updateLink(links[0].id);
+    console.log("Result: ", updateLinkResult);
 
     console.log("Finished testing database.");
   } catch (error) {
