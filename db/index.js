@@ -143,6 +143,32 @@ async function getLinkById(linkId) {
   }
 }
 
+async function getTagById(tagId) {
+  try {
+    const {
+      rows: [tag],
+    } = await client.query(
+      `
+      SELECT *
+      FROM tags
+      WHERE id=$1;
+    `,
+      [tagId]
+    );
+
+    if (!tag) {
+      throw {
+        name: "TagNotFoundError",
+        message: "Could not find a tag with that tagId",
+      };
+    }
+
+    return tag;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function getAllLinks() {
   try {
     const { rows: linkIds } = await client.query(`
@@ -181,6 +207,25 @@ async function getLinksByTagName(tagName) {
   }
 }
 
+async function getAllTags() {
+  try {
+    const { rows: tagIds } = await client.query(`
+SELECT id
+FROM tags;
+`);
+    const tags = await Promise.all(
+      tagIds.map(async (tag) => {
+        const tagObj = getTagById(tag.id);
+        return tagObj;
+      })
+    );
+    return tags;
+  } catch (error) {
+    console.log("error running getAllTags");
+    throw error;
+  }
+}
+
 async function updateLink(linkId) {
   try {
     await client.query(
@@ -204,6 +249,7 @@ module.exports = {
   // db methods
   createLink,
   getAllLinks,
+  getAllTags,
   getLinksByTagName,
   updateLink,
 };

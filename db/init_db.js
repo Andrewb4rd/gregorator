@@ -3,6 +3,7 @@ const {
   client,
   createLink,
   getAllLinks,
+  getAllTags,
   getLinksByTagName,
   updateLink,
   // other db methods
@@ -85,6 +86,10 @@ async function testDb() {
     console.log("Calling getAllLinks");
     const links = await getAllLinks();
     console.log("Result: ", links);
+
+    console.log("Calling getAllTags");
+    const tags = await getAllTags();
+    console.log("Result: ", tags);
 
     console.log("Calling getLinksByTagName with 'Cosby'...");
     const linksByTag = await getLinksByTagName("Cosby");

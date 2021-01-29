@@ -1,0 +1,37 @@
+#header {
+  height: 5em;
+  background-color: white;
+}
+
+.headerColumn1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchFormButtonGroup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  display: flex;
+  font-family: Orbitron;
+  font-size: 35px;
+}
+
+.logoShort {
+  display: none;
+  font-family: Orbitron;
+  font-size: 35px;
+}
+
+@media only screen and (max-width: 825px) {
+  .logo {
+    display: none;
+  }
+  .logoShort {
+    display: flex;
+  }
+}

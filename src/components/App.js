@@ -1,28 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import Header from "./Header";
+import Body from "./Body";
+import { getAllTags, getAllLinks } from "../api/index";
 
-import {
-  getSomething
-} from '../api';
+import "../styles/App.css";
 
 const App = () => {
-  const [message, setMessage] = useState('');
+  const [tags, setTags] = useState([]);
+  const [links, setLinks] = useState([]);
+
+  async function initializeTags() {
+    const tagArray = await getAllTags();
+    setTags(tagArray);
+  }
+
+  async function initializeLinks() {
+    const linkArray = await getAllLinks();
+    setLinks(linkArray);
+  }
 
   useEffect(() => {
-    getSomething()
-      .then(response => {
-        setMessage(response.message);
-      })
-      .catch(error => {
-        setMessage(error.message);
-      });
-  });
+    if (tags.length < 1) {
+      initializeTags();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (links.length < 1) {
+      initializeLinks();
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log("Links: ", links);
+  }, [links]);
 
   return (
     <div className="App">
-      <h1>Hello, World!</h1>
-      <h2>{ message }</h2>
+      <Header />
+      <Body tags={tags} links={links} />
     </div>
   );
-}
+};
 
 export default App;
