@@ -9,7 +9,12 @@ const DB_URL = process.env.DATABASE_URL || {
   port: 5432,
   ssl: true,
 };
-const client = new Client(DB_URL);
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 
 // database methods
 
