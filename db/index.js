@@ -7,6 +7,7 @@ const DB_URL = process.env.DATABASE_URL || {
   database: "d7g1o2bnhfuml5",
   password: "b8ae4121d8bdffb68ddec5f70adf78c01d0870663c0e8ec1dbc7a1137227590e",
   port: 5432,
+  ssl: true,
 };
 const client = new Client(DB_URL);
 
