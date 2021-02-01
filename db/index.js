@@ -2,10 +2,10 @@
 const { Client } = require("pg");
 const DB_NAME = "gregorator-dev";
 const DB_URL = process.env.DATABASE_URL || {
-  user: "postgres",
-  host: "localhost",
-  database: "gregorator-dev",
-  password: "2112",
+  user: "kvxrzupevifgxq",
+  host: "ec2-54-211-55-24.compute-1.amazonaws.com",
+  database: "d7g1o2bnhfuml5",
+  password: "b8ae4121d8bdffb68ddec5f70adf78c01d0870663c0e8ec1dbc7a1137227590e",
   port: 5432,
 };
 const client = new Client(DB_URL);
