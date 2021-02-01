@@ -1,20 +1,8 @@
 // Connect to DB
 const { Client } = require("pg");
-const DB_NAME = "gregorator-dev";
-const DB_URL = process.env.DATABASE_URL || {
-  user: "kvxrzupevifgxq",
-  host: "ec2-54-211-55-24.compute-1.amazonaws.com",
-  database: "d7g1o2bnhfuml5",
-  password: "b8ae4121d8bdffb68ddec5f70adf78c01d0870663c0e8ec1dbc7a1137227590e",
-  port: 5432,
-  ssl: true,
-};
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
+const DB_NAME = "change-this-name";
+const DB_URL = process.env.DATABASE_URL || `postgres://${DB_NAME}`;
+const client = new Client(DB_URL);
 
 // database methods
 
