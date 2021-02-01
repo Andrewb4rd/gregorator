@@ -3,8 +3,6 @@ import Header from "./Header";
 import Body from "./Body";
 import { getAllTags, getAllLinks } from "../api/index";
 
-import "../styles/App.css";
-
 const App = () => {
   const [tags, setTags] = useState([]);
   const [links, setLinks] = useState([]);
@@ -31,14 +29,10 @@ const App = () => {
     }
   }, []);
 
-  useEffect(() => {
-    console.log("Links: ", links);
-  }, [links]);
-
   return (
     <div className="App">
-      <Header />
-      <Body tags={tags} links={links} />
+      <Header setLinks={setLinks} />
+      <Body tags={tags} setTags={setTags} links={links} setLinks={setLinks} />
     </div>
   );
 };

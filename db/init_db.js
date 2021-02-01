@@ -65,13 +65,19 @@ async function populateInitialData() {
       comment: "Who's he peepin' at though?",
       date: "1/26/2021",
       url: "https://www.youtube.com/watch?v=MC2XkigeXiI",
-      tags: ["funny", "walking", "cosby"],
+      tags: ["funny", "cosby"],
     });
     await createLink({
-      comment: "Video I made for school in like 9th grade",
+      comment: "Scott Bradford will be 20 in December",
       date: "1/26/2021",
-      url: "https://www.youtube.com/watch?v=oAulKa4C4-Q",
-      tags: ["ancient", "walking", "reflective"],
+      url: "https://www.youtube.com/watch?v=Pbkn21NNduc",
+      tags: ["funny"],
+    });
+    await createLink({
+      comment: "How to get a 100k salary IMMEDIATELY after bootcamp ",
+      date: "1/26/2021",
+      url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      tags: ["informative", "helpful"],
     });
     console.log("finished creating test links!");
   } catch (error) {
@@ -95,8 +101,8 @@ async function testDb() {
     const linksByTag = await getLinksByTagName("Cosby");
     console.log("Result: ", linksByTag);
 
-    console.log("Calling updateLink on links[0]");
-    const updateLinkResult = await updateLink(links[0].id);
+    console.log("Calling updateLink on links[3]");
+    const updateLinkResult = await updateLink(links[3].id);
     console.log("Result: ", updateLinkResult);
 
     console.log("Finished testing database.");

@@ -7,14 +7,18 @@
 
 .bodyContainer {
   padding: 0 0;
+  margin-top: 100px;
+  overflow-x: hidden;
 }
 
 .form-control-lg {
+  display: flex;
   width: 38em;
 }
 
 .form-control-lg:hover {
   border: 1px solid black;
+  cursor: text;
 }
 
 .sortCol1 {
@@ -22,6 +26,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 4em 0;
+  border: 1px solid rgb(179, 179, 179);
   background-color: white;
   max-width: 47.4em;
   height: 3.1em;
@@ -52,7 +57,7 @@
 .cardBody {
   display: flex;
   flex-direction: column;
-  border: 1px solid lightgray;
+  border: 1px solid rgb(179, 179, 179);
 }
 
 .clickTracker {

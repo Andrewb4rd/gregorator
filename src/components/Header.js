@@ -8,10 +8,12 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
+import { getLinksByTag, getAllLinks } from "../api/index";
 
-const Header = () => {
+const Header = ({ setLinks }) => {
   const [radioValue, setRadioValue] = useState("1");
   const [radioValueName, setRadioValueName] = useState("");
+  const [searchValue, setSearchValue] = useState("");
   const radios = [
     { name: "URL", value: "1" },
     { name: "TAGS", value: "2" },
@@ -25,6 +27,41 @@ const Header = () => {
     }
   }, [radioValue]);
 
+  const onSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchValue(value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let radio = radioValue;
+    let search = searchValue;
+    // SEARCH BY URL
+    if (radio === "1") {
+      let result = await getAllLinks();
+      let linkArr = result;
+      let filteredLinks = linkArr.filter((link) => {
+        if (link.url.includes(search)) {
+          return link.url;
+        }
+      });
+      if (!filteredLinks.length) {
+        alert(`Sorry, there were no URL results for "${search}".`);
+      } else {
+        setLinks(filteredLinks);
+      }
+      // SEARCH BY TAGS
+    } else {
+      let result = await getLinksByTag(search);
+      let linkArr = result.links;
+      if (!linkArr.length) {
+        alert(`Sorry, there were no tag results for "${search}".`);
+      } else {
+        setLinks(linkArr);
+      }
+    }
+  };
+
   return (
     <Container fluid id="header">
       <Row>
@@ -33,14 +70,17 @@ const Header = () => {
           <div className="logo">GREGORATOR</div>
         </Col>
         <Col>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <InputGroup>
               <Form.Control
                 type="search"
+                onChange={onSearchChange}
                 placeholder={"Search by " + radioValueName}
               />
               <InputGroup.Append>
-                <Button variant="outline-secondary">Search</Button>
+                <Button variant="outline-secondary" type="submit">
+                  Search
+                </Button>
               </InputGroup.Append>
             </InputGroup>
             <div className="searchFormButtonGroup">

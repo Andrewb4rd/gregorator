@@ -21,7 +21,6 @@ linksRouter.get("/", async (req, res, next) => {
 
 linksRouter.post("/", async (req, res, next) => {
   const { url, comment, date, tags = "" } = req.body;
-
   const tagArr = tags.trim().split(/\s+/);
   const linkData = {};
   // only send the tags if there are some to send
@@ -52,7 +51,6 @@ linksRouter.post("/", async (req, res, next) => {
 
 linksRouter.patch("/:id", async (req, res, next) => {
   const { id } = req.params;
-
   try {
     const updatedLink = await updateLink(id);
     res.send({ link: updatedLink });
